@@ -25,6 +25,32 @@
     <button id="btn-1" style="width: 50px; height: 50px">say hi</button>
     <button>say hi</button>
     <button>say hi</button>
+
+    <!-- semantic html -->
+    <div
+      style="
+        width: fit-content;
+        padding: 3px;
+        border: 1px solid grey;
+        border-radius: 3px;
+        background-color: lightgrey;
+      "
+      role="button"
+    >
+      say hi
+    </div>
+
+    <head></head>
+    <main></main>
+    <footer></footer>
+
+    <!-- event capturing and bubbling-->
+    <div id="container" style="padding: 30px; background-color: bisque">
+      <div id="parent" style="padding: 30px; background-color: grey">
+        <button id="child">Click</button>
+      </div>
+    </div>
+
     <!-- <script src="index.js"></script> -->
   </body>
 </html>

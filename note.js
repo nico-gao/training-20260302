@@ -40,4 +40,36 @@
  * JS runtime
  * browser - ECMAscript + WebAPI (DOM api, network, storage, window)
  * nodejs - ECMAScript + NodeAPI (file system, path, network(creating server), process, global)
+ *
+ * semantic html
+ * accessibililty
+ * SEO
+ * meaningful code, readability, maintainability
+ * aria attribute
+ *
+ *
+ * events
+ * capturing -> target element -> bubbling
+ *
+ * event delegation
+ *
+ * css specificity
+ *
+ * cdn (content deliver network)
+ *
+ * responsiveness
+ * mobile first approach
+ * desktop first approach
+ *
+ * %, vw, vh, em, rem, fr
+ *
+ * BEM
+ *
+ * card
+ * card__title
+ * card__description
+ * card__button--disable
+ * card__button--primary
+ * card__button--secondary
+ *
  */
