@@ -145,10 +145,38 @@ for (var i = 0; i < 3; i++) {
       console.log(j);
     }, 100);
   })(i);
+  // iife - immediate invoked function expression
 }
+
+/**
+ * loop 1
+ * 
+    setTimeout(function () {
+      console.log(0);
+    }, 100);
+  
+
+  loop 2
+
+    setTimeout(function () {
+      console.log(1);
+    }, 100);
+
+
+  loop 3
+    setTimeout(function () {
+      console.log(2);
+    }, 100);
+
+  after 100ms
+
+  0, 1, 2
+
+ */
 
 // var i
 for (let i = 0; i < 3; i++) {
+  // let i
   setTimeout(function () {
     console.log(i);
   }, 100);
@@ -158,20 +186,22 @@ for (let i = 0; i < 3; i++) {
  * loop 1: function () {
     console.log(i);
   }
-    i => 1
+    let i => 0 
  * 
 
   loop2: function () {
     console.log(i);
   }
 
-  i => 2
+  i => 1 
 
   loop 3: function () {
     console.log(i);
   }
 
-  i => 3
+  i => 2 
 
   after 100ms
+  
+  0, 1, 2 
  */
