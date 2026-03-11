@@ -3,12 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="day4.js" defer></script>
+    <script src="postData.js"></script>
+    <script src="postList.js" defer></script>
     <title>Document</title>
   </head>
   <body>
-    <button class="nav-btn">home</button>
-    <button class="nav-btn">profile</button>
-    <button class="nav-btn">setting</button>
+    <div id="app">
+      <button class="nav-btn">home</button>
+      <button class="nav-btn">profile</button>
+      <button class="nav-btn">setting</button>
+
+      <ul id="posts-container"></ul>
+      <div class="pagination-container">
+        <button id="prev-btn">Previous</button>
+        <span id="page-number">Page 1 of ...</span>
+        <button id="next-btn">Next</button>
+      </div>
+    </div>
   </body>
 </html>
