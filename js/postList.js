@@ -1,6 +1,14 @@
 const LIMIT = 5;
 let currentPage = 1;
 let totalPages = 1;
+let skip = 0;
+
+// api
+function getPosts(limit, skip) {
+  return fetch(`https://dummyjson.com/posts?limit=${limit}&skip=${skip}`).then(
+    (res) => res.json(),
+  );
+}
 
 function createPostElement(post) {
   const postItem = document.createElement("li");
@@ -16,8 +24,13 @@ function createPostElement(post) {
   return postItem;
 }
 
-function render() {
-  totalPages = Math.ceil(postData.length / LIMIT);
+async function render() {
+  const postResponse = await getPosts(LIMIT, skip);
+  const postData = postResponse.posts;
+  console.log(postResponse);
+  // totalPages = Math.ceil(postData.length / LIMIT);
+  totalPages = postResponse.total;
+  skip += LIMIT;
 
   const postContainer = document.getElementById("posts-container");
   const pageNumber = document.getElementById("page-number");
@@ -27,7 +40,7 @@ function render() {
   postContainer.replaceChildren();
 
   const postElements = postData
-    .slice((currentPage - 1) * LIMIT, currentPage * LIMIT)
+    // .slice((currentPage - 1) * LIMIT, currentPage * LIMIT)
     .map((post) => createPostElement(post));
 
   postContainer.append(...postElements);
@@ -94,13 +107,14 @@ render();
  *
  */
 
-window.addEventListener(
-  "mousemove",
-  throttle((e) => {
-    console.log(e.clientX, e.clientY);
-  }),
-);
+// window.addEventListener(
+//   "mousemove",
+//   throttle((e) => {
+//     console.log(e.clientX, e.clientY);
+//   }),
+// );
 
+// higher order function
 function debounce(cb, delay = 1000) {
   let timeoutId;
 
@@ -125,3 +139,17 @@ function throttle(cb, delay = 1000) {
     }, delay);
   };
 }
+
+// currying: you call a function in a sequence with individual arguments
+
+// const add = (a, b) => a + b;
+// console.log(add(1, 2));
+
+const curriedAdd = (a) => (b) => a + b;
+console.log(curriedAdd(1)(2)); // output 3
+
+const add1 = curriedAdd(1);
+
+console.log(add1(2));
+console.log(add1(3));
+console.log(add1(4));
