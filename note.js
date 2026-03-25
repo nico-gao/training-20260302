@@ -73,3 +73,20 @@
  * card__button--secondary
  *
  */
+
+/**
+ * semantic versioning
+ *
+ * major.minor.patch
+ * 5.1.12
+ *
+ *
+ * major: breaking changes
+ * minor: new features added
+ * patch: bug fixing
+ *
+ *
+ * ^: update to the latest minor version
+ * ~: update to the latest patch version
+ * no symbol: use the exact version
+ */
