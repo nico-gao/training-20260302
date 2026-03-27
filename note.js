@@ -89,4 +89,36 @@
  * ^: update to the latest minor version
  * ~: update to the latest patch version
  * no symbol: use the exact version
+ *
+ *
+ *
+ * REST apis
+ *
+ * projects -> lists -> todos
+ *
+ * 1. entity
+ * 2. relationship, hierarchy
+ * 3. crud
+ *    GET, POST, PUT/PATCH/ DELETE
+ *
+ *
+ *
+ * GET /lists: get all lists
+ * POST /lists: create a new list
+ * PUT /lists/:listId: update a list
+ * DELETE /lists/:listId: delete a list
+ *
+ * GET /todos: get all todos
+ * GET /lists/:listId/todos: get all todos for a list
+ *
+ *
+ * authentication: who you are
+ * authorization: what you do
+ *
+ *
+ * passing data in a request
+ * 1. query parameter (filter, sort, pagination)
+ * 2. path
+ * 3. request body
+ *
  */

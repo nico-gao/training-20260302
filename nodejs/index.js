@@ -1,14 +1,37 @@
-// import { createServer } from "node:http";
+import fs from "node:fs";
 
-// const hostname = "127.0.0.1";
-// const port = 3001;
+console.log("====== this is es module =========");
 
-// const server = createServer((req, res) => {
-//   res.statusCode = 200;
-//   res.setHeader("Content-Type", "text/plain");
-//   res.end("Hello World");
+console.log("start"); // 1
+
+setTimeout(() => {
+  console.log("setTimeout");
+  // process.nextTick(() => {
+  //   console.log("nextTick");
+  // });
+}, 0);
+// 1ms
+
+setImmediate(() => {
+  console.log("setImmediate");
+});
+
+// fs.readFile("", () => {
+//   setTimeout(() => {
+//     console.log("read file setTimeout");
+//   }, 0);
+
+//   setImmediate(() => {
+//     console.log("read file setImmediate");
+//   });
 // });
 
-// server.listen(port, hostname, () => {
-//   console.log(`Server running at http://${hostname}:${port}/`);
-// });
+Promise.resolve().then(() => {
+  console.log("promise");
+}); // 3
+
+process.nextTick(() => {
+  console.log("nextTick");
+});
+
+console.log("end"); // 2

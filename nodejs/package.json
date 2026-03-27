@@ -7,9 +7,11 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --watch server.js"
   },
   "dependencies": {
+    "express": "^5.2.1",
     "react": "^19.2.4"
   },
   "devDependencies": {
