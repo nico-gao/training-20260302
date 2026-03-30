@@ -121,4 +121,12 @@
  * 2. path
  * 3. request body
  *
+ *
+ * authentication
+ *
+ * session based
+ * token based (JWT)
+ * OAuth
+ * SSO
+ *
  */
