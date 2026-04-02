@@ -15,6 +15,7 @@ import listsRouter from "./routes/lists";
 import { swaggerSpec } from "./swagger";
 
 const app = express();
+const frontendOrigin = process.env.FRONTEND_ORIGIN ?? "http://localhost:5173";
 
 app.set("views", path.join(__dirname, "..", "views"));
 app.set("view engine", "jade");
@@ -29,7 +30,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "..", "public")));
-app.use("/frontend", express.static(path.join(__dirname, "client")));
+app.use((req: Request, res: Response, next: NextFunction) => {
+  if (req.headers.origin === frontendOrigin) {
+    res.header("Access-Control-Allow-Origin", frontendOrigin);
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+    res.header("Vary", "Origin");
+  }
+
+  if (req.method === "OPTIONS") {
+    res.sendStatus(204);
+    return;
+  }
+
+  next();
+});
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/", indexRouter);

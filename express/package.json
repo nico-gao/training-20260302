@@ -3,10 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "tsc && vite build",
-    "dev": "node --watch ./dist/bin/www.js",
-    "start": "npm run build && node ./dist/bin/www.js",
-    "test": "npm run build && jest --runInBand --watchman=false && vitest run"
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "tsc",
+    "build:frontend": "vite build --config client/vite.config.ts",
+    "dev": "npm run dev:backend",
+    "dev:backend": "node --watch ./dist/bin/www.js",
+    "dev:frontend": "vite --config client/vite.config.ts",
+    "start": "npm run build:backend && node ./dist/bin/www.js",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "npm run build:backend && jest --runInBand --watchman=false",
+    "test:frontend": "vitest run --config client/vite.config.ts",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@types/react": "^19.2.14",
@@ -29,6 +36,7 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/bcrypt": "^6.0.0",
@@ -42,6 +50,7 @@
     "@types/node": "^24.5.2",
     "@types/supertest": "^7.2.0",
     "@vitejs/plugin-react": "^6.0.1",
+    "@playwright/test": "^1.59.1",
     "jest": "^30.3.0",
     "jsdom": "^29.0.1",
     "supertest": "^7.2.2",

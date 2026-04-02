@@ -145,6 +145,77 @@ code {
   overflow-wrap: anywhere;
 }
 
+.workspace {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.workspace-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.workspace-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.workspace-header h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.inline-form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.logout-button {
+  border: 0;
+  padding: 0.7rem 0.95rem;
+  border-radius: 999px;
+  color: #17362b;
+  font-weight: 700;
+  background: rgba(23, 54, 43, 0.1);
+  cursor: pointer;
+}
+
+.inline-form input {
+  width: 100%;
+  padding: 0.95rem 1rem;
+  border: 1px solid rgba(28, 42, 36, 0.12);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.list-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.list-card {
+  padding: 1rem;
+  border-radius: 1rem;
+  background: rgba(23, 54, 43, 0.05);
+}
+
+.todo-list {
+  margin: 0.75rem 0 1rem;
+  padding-left: 1.25rem;
+}
+
+.todo-list li + li {
+  margin-top: 0.35rem;
+}
+
+.todo-empty {
+  color: rgba(28, 42, 36, 0.6);
+}
+
 button:hover:not(:disabled) {
   transform: translateY(-1px);
 }

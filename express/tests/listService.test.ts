@@ -1,6 +1,7 @@
 import { createListRecord, resetDatabase } from "../models";
 import {
   createList,
+  createTodo,
   getLists,
   updateList,
 } from "../services/listService";
@@ -33,6 +34,34 @@ describe("listService", () => {
 
   it("rejects updates for missing lists", async () => {
     await expect(updateList("missing-id", "Updated")).rejects.toThrow(
+      "List not found",
+    );
+  });
+
+  it("creates a todo under an existing list", async () => {
+    const list = await createListRecord("Groceries");
+
+    const todo = await createTodo(list.id, "  Buy milk  ");
+    const lists = await getLists();
+
+    expect(todo).toEqual(
+      expect.objectContaining({
+        listId: list.id,
+        name: "Buy milk",
+        completed: false,
+      }),
+    );
+    expect(lists).toEqual([
+      expect.objectContaining({
+        id: list.id,
+        name: "Groceries",
+        todos: [expect.objectContaining({ name: "Buy milk" })],
+      }),
+    ]);
+  });
+
+  it("rejects todos for a missing list", async () => {
+    await expect(createTodo("missing-id", "Buy milk")).rejects.toThrow(
       "List not found",
     );
   });

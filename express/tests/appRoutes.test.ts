@@ -58,4 +58,45 @@ describe("app routes", () => {
     expect(createResponse.body.name).toBe("Groceries");
     await expect(getLists()).resolves.toHaveLength(1);
   });
+
+  it("creates a todo under a list with a valid access token", async () => {
+    await request(app)
+      .post("/auth/signup")
+      .send({ email: "todos@example.com", password: "secret123" });
+
+    const loginResponse = await request(app)
+      .post("/auth/login")
+      .send({ email: "todos@example.com", password: "secret123" });
+    const token = loginResponse.body.accessToken as string;
+
+    const listResponse = await request(app)
+      .post("/lists")
+      .set("Authorization", `Bearer ${token}`)
+      .send({ name: "Weekend" });
+
+    const todoResponse = await request(app)
+      .post(`/lists/${listResponse.body.id as string}/todos`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ name: "Wash car" });
+
+    const listsResponse = await request(app)
+      .get("/lists")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(todoResponse.status).toBe(201);
+    expect(todoResponse.body).toEqual(
+      expect.objectContaining({
+        listId: listResponse.body.id,
+        name: "Wash car",
+        completed: false,
+      }),
+    );
+    expect(listsResponse.status).toBe(200);
+    expect(listsResponse.body).toEqual([
+      expect.objectContaining({
+        id: listResponse.body.id,
+        todos: [expect.objectContaining({ name: "Wash car" })],
+      }),
+    ]);
+  });
 });

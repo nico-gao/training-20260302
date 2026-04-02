@@ -23,6 +23,10 @@ export interface Todo {
   completed: boolean;
 }
 
+export interface ListWithTodos extends List {
+  todos: Todo[];
+}
+
 const defaultDatabasePath = path.join(process.cwd(), "data", "app.sqlite");
 const databasePath = process.env.SQLITE_DB_PATH ?? defaultDatabasePath;
 
@@ -106,6 +110,43 @@ const getLists = async (): Promise<List[]> => {
   return db.all<List[]>("SELECT id, name FROM lists ORDER BY rowid ASC");
 };
 
+const getTodosByListId = async (listId: string): Promise<Todo[]> => {
+  const db = await getDb();
+  const rows = await db.all<
+    Array<{
+      id: string;
+      list_id: string;
+      name: string;
+      completed: number;
+    }>
+  >(
+    `SELECT id, list_id, name, completed
+     FROM todos
+     WHERE list_id = ?
+     ORDER BY rowid ASC`,
+    listId,
+  );
+
+  return rows.map((row) => ({
+    id: row.id,
+    listId: row.list_id,
+    name: row.name,
+    completed: row.completed === 1,
+  }));
+};
+
+const getListsWithTodos = async (): Promise<ListWithTodos[]> => {
+  const lists = await getLists();
+  const todosByList = await Promise.all(
+    lists.map(async (list) => ({
+      ...list,
+      todos: await getTodosByListId(list.id),
+    })),
+  );
+
+  return todosByList;
+};
+
 const createListRecord = async (name: string): Promise<List> => {
   const db = await getDb();
   const list: List = {
@@ -141,6 +182,26 @@ const updateListName = async (id: string, name: string): Promise<List | undefine
   return findListById(id);
 };
 
+const createTodoRecord = async (listId: string, name: string): Promise<Todo> => {
+  const db = await getDb();
+  const todo: Todo = {
+    id: crypto.randomUUID(),
+    listId,
+    name,
+    completed: false,
+  };
+
+  await db.run(
+    "INSERT INTO todos (id, list_id, name, completed) VALUES (?, ?, ?, ?)",
+    todo.id,
+    todo.listId,
+    todo.name,
+    0,
+  );
+
+  return todo;
+};
+
 const resetDatabase = async (): Promise<void> => {
   const db = await getDb();
 
@@ -153,10 +214,13 @@ const resetDatabase = async (): Promise<void> => {
 
 export {
   createListRecord,
+  createTodoRecord,
   findListById,
   findUserByEmail,
   getDb,
   getLists,
+  getListsWithTodos,
+  getTodosByListId,
   insertUser,
   resetDatabase,
   updateListName,

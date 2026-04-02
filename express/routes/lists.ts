@@ -1,6 +1,6 @@
 import express from "express";
 
-import { createList, getLists, updateList } from "../controllers/lists";
+import { createList, createTodo, getLists, updateList } from "../controllers/lists";
 import { authMiddleware } from "../middlewares/auth";
 
 const router = express.Router();
@@ -119,5 +119,40 @@ router.post("/", createList);
  *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.post("/:id", updateList);
+
+/**
+ * @openapi
+ * /lists/{id}/todos:
+ *   post:
+ *     summary: Create a new todo item inside a list
+ *     tags:
+ *       - Lists
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/TodoInput'
+ *     responses:
+ *       201:
+ *         description: Todo created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Todo'
+ *       400:
+ *         description: Missing todo name
+ *       404:
+ *         description: List not found
+ */
+router.post("/:id/todos", createTodo);
 
 export default router;

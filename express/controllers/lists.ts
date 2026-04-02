@@ -52,4 +52,29 @@ const updateList = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export { getLists, createList, updateList };
+const createTodo = async (req: Request, res: Response): Promise<void> => {
+  const { name } = req.body as { name?: string };
+  const listId = String(req.params.id);
+
+  if (!name) {
+    res.status(400).json({ message: "Todo name is required" });
+    return;
+  }
+
+  try {
+    const todo = await listService.createTodo(listId, name);
+    res.status(201).json(todo);
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Unable to create todo";
+    const status =
+      message === "Todo name is required"
+        ? 400
+        : message === "List not found"
+          ? 404
+          : 500;
+    res.status(status).json({ message });
+  }
+};
+
+export { getLists, createList, updateList, createTodo };

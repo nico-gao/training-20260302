@@ -96,9 +96,41 @@ const options: swaggerJsdoc.Options = {
             name: {
               type: "string",
             },
+            todos: {
+              type: "array",
+              items: {
+                $ref: "#/components/schemas/Todo",
+              },
+            },
           },
         },
         ListInput: {
+          type: "object",
+          required: ["name"],
+          properties: {
+            name: {
+              type: "string",
+            },
+          },
+        },
+        Todo: {
+          type: "object",
+          properties: {
+            id: {
+              type: "string",
+            },
+            listId: {
+              type: "string",
+            },
+            name: {
+              type: "string",
+            },
+            completed: {
+              type: "boolean",
+            },
+          },
+        },
+        TodoInput: {
           type: "object",
           required: ["name"],
           properties: {

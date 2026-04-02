@@ -1,6 +1,6 @@
 import type { Request } from "express";
 
-import { createList, updateList } from "../controllers/lists";
+import { createList, createTodo, updateList } from "../controllers/lists";
 import { createListRecord, getLists, resetDatabase } from "../models";
 import { createMockResponse } from "./helpers/mockResponse";
 
@@ -49,5 +49,19 @@ describe("lists controller", () => {
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual({ id: list.id, name: "Updated" });
     expect(updatedLists[0]?.name).toBe("Updated");
+  });
+
+  it("returns 400 when the todo name is missing", async () => {
+    const list = await createListRecord("Groceries");
+    const req = {
+      body: {},
+      params: { id: list.id },
+    } as unknown as Request;
+    const res = createMockResponse();
+
+    await createTodo(req, res as never);
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body).toEqual({ message: "Todo name is required" });
   });
 });
