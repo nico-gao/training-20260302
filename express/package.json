@@ -3,12 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && vite build",
     "dev": "node --watch ./dist/bin/www.js",
     "start": "npm run build && node ./dist/bin/www.js",
-    "test": "npm run build && jest --runInBand --watchman=false"
+    "test": "npm run build && jest --runInBand --watchman=false && vitest run"
   },
   "dependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
     "bcrypt": "^6.0.0",
@@ -19,12 +21,16 @@
     "jade": "~1.11.0",
     "jsonwebtoken": "^9.0.3",
     "morgan": "~1.9.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/bcrypt": "^6.0.0",
     "@types/cookie-parser": "^1.4.9",
     "@types/debug": "^4.1.12",
@@ -35,8 +41,12 @@
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.5.2",
     "@types/supertest": "^7.2.0",
+    "@vitejs/plugin-react": "^6.0.1",
     "jest": "^30.3.0",
+    "jsdom": "^29.0.1",
     "supertest": "^7.2.2",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "vite": "^8.0.3",
+    "vitest": "^4.1.2"
   }
 }
