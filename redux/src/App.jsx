@@ -22,13 +22,29 @@ function App({ name }) {
 
   return (
     <div>
-      {!loading &&
-        data?.todos.map((todo) => <li key={todo.id}>{todo.todo}</li>)}
+      <ErrorBoundary fallback={<h1>something is wrong</h1>}>
+        {!loading &&
+          data?.todos.map((todo) => <li key={todo.id}>{todo.todo}</li>)}
+      </ErrorBoundary>
     </div>
   );
 }
 
 export default App;
+
+// const todos= [{id: 1}, {id: 2}]
+// const previousProps = {
+//   name: 'alice',
+//   age: 18,
+//   todos: todos
+// }
+
+// const newProps = {
+//   name: 'alice',
+//   age: 18,
+//   todos: todos
+// }
+
 // export default  withAuth(withName(App));
 
 // const withAuth = (WrappedComponent) => {
